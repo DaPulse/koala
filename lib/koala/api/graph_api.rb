@@ -74,6 +74,13 @@ module Koala
         graph_call("", args.merge("ids" => ids.respond_to?(:join) ? ids.join(",") : ids), "get", options, &block)
       end
 
+      # Make post requests to the API
+      def post_object(id, args = {}, options = {}, &block)
+        # Posts a certain connection
+        raise AuthenticationError.new(nil, nil, "Write operations require an access token") unless @access_token
+        graph_call("#{id}", args, "post", options, &block)
+      end
+
       # Write an object to the Graph for a specific user.
       # @see #put_connections
       #
